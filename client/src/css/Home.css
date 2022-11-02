@@ -1,0 +1,45 @@
+.main-title {
+    background-color: #0062E6;
+}
+
+.title {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 7.5vh;
+}
+
+.single-title {
+    font-size: 3rem;
+    margin: 0;
+    color: rgba(245, 245, 245, 0.884);
+}
+
+.sec-1,
+.sec-2,
+.sec-3 {
+    margin: 7vh 15vh 7vh 15vh;
+    box-shadow: 4px 4px 8px black;
+    /* margin-left: 15vh;
+    margin-right: 15vh; */
+}
+
+.img {
+    /* border: 1px black solid; */
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 5vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+
+}
+
+.text {
+    /* border: 1px black solid; */
+    padding: 12.5vh;
+}

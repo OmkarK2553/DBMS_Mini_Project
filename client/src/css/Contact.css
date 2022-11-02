@@ -1,0 +1,25 @@
+.contact-title {
+    margin: 5vh;
+    /* border-bottom: 2px black solid; */
+}
+
+.contact {
+    flex-basis: 33%;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2.5vh;
+    margin-top: 7vh;
+}
+
+.single-contact {
+    box-shadow: 4px 4px 8px black;
+    padding: 5vh;
+    width: 25%;
+    margin: 2.5vh;
+}
+
+.single-contact:hover {
+    transform: translateY(-20px);
+    transition: 0.5s;
+    transition: all 0.3s ease;
+}

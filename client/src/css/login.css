@@ -1,0 +1,59 @@
+body {
+    /* background: linear-gradient(to right, #0062E6, #33AEFF); */
+    /* background-color: #33AEFF; */
+}
+
+.container {
+    margin-top: 20vh;
+    /* margin-left: 25%; */
+    /* border: 2px #000000 solid; */
+    width: 25%;
+    border-radius: 10px;
+    padding: 5vh 2vh 4vh 2vh;
+    background-color: whitesmoke;
+    box-shadow: 4px 4px 8px black;
+}
+
+h2 {
+    margin-top: 2.5vh;
+    margin-bottom: 5vh;
+
+}
+
+.inputFields {
+    margin: 1.5vh 0 1.5vh 0;
+}
+
+#uid {
+    width: 75%;
+}
+
+#pwd {
+    width: 75%;
+}
+
+#loginBtn {
+    margin: 2.5vh 0 2.5vh 0;
+}
+
+.fa {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    padding: 5px;
+    font-size: 15px;
+    margin: 5px;
+    box-shadow: 2px 2px 4px black;
+    text-decoration: none;
+}
+
+.fa-instagram {
+    background-color: #f40083;
+    color: white;
+}
+
+.fa-facebook {
+    background-color: #4867AA;
+    color: white;
+}
