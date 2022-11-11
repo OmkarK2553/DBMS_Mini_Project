@@ -73,6 +73,30 @@ app.post("/login", (req, res) => {
     )
 })
 
+app.post("/adminlogin", (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    db.query(
+        "SELECT * FROM Admin WHERE email=? AND pass=?",
+        [email, password],
+        (err, result) => {
+            if (err) {
+                res.send({ err: err })
+            }
+            else {
+                if (result.length > 0) {
+
+                    console.log(result, "loginresult");
+                    res.send(result);
+                }
+                else {
+                    res.send({ status: 500, message: "Invalid Credentials!" })
+                }
+            }
+        }
+    )
+})
+
 app.post("/buy", (req, res) => {
     const id = req.body.id;
     const iid = req.body.iid;
@@ -94,11 +118,24 @@ app.post("/buy", (req, res) => {
     res.send({ message: "Bought Insurance!" })
 })
 
+app.delete("/adminpage", (req, res) => {
+    const id = req.body.id;
+    console.log(id, "idddddddddddd");
+    db.query(
+        "DELETE FROM Insurance WHERE ins_id=?", [id],
+        (error, result) => {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log("deleted rows: ", result.affectedRows);
+                res.send(result);
+            }
+        })
+})
+
 app.get("/dashboard", (req, res) => {
-    // console.log(req.body, "body");
-    // const uid = req.body.uid
-    // console.log(uid);
-    console.log(user, "user");
+    console.log(user, "userdashboard");
     db.query(
         "SELECT * FROM Insurance WHERE email=?",
         [user],
@@ -113,29 +150,22 @@ app.get("/dashboard", (req, res) => {
     );
 })
 
-// app.post("/dashboard", (req, res) => {
-//     const cname = req.body.cname;
-//     const ctype = req.body.ctype;
-//     const state = req.body.state;
-//     const city = req.body.city;
-//     const location = req.body.location;
-
-//     db.query(
-//         "INSERT INTO courtschema.court (cname, ctype, state, city, location) VALUES (?,?,?,?,?)",
-//         [cname, ctype, state, city, location],
-//         (err, result) => {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 res.send("Values Inserted in court table");
-//             }
-//         }
-//     );
-// });
+app.get("/adminpage", (req, res) => {
+    db.query(
+        "SELECT * FROM Insurance",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+                res.send(result);
+            }
+        }
+    );
+})
 
 db.connect((err) => {
     if (err) {
-        // throw err;
         console.log(err);
     }
     console.log("database connected");

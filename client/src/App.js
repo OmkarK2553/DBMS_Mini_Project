@@ -8,8 +8,14 @@ import Signup from './components/Signup'
 import Contact from './components/Contact'
 import Dashboard from './components/Dashboard';
 import InsuranceForm from './components/InsuranceForm';
+import { useEffect } from 'react';
+import AdminLogin from './components/AdminLogin';
+import AdminPage from './components/AdminPage';
 
 function App() {
+  useEffect(() => {
+    document.title = "Insurance Management"
+  })
   return (
     <>
       <Navbar />
@@ -21,6 +27,8 @@ function App() {
         <Route exact path="/contact" element={<Contact />}></Route>
         <Route exact path="/dashboard" element={<Dashboard />}></Route>
         <Route exact path="/buy" element={<InsuranceForm />}></Route>
+        <Route exact path="/adminlogin" element={<AdminLogin />}></Route>
+        <Route exact path="/adminpage" element={<AdminPage />}></Route>
       </Routes>
     </>
   );

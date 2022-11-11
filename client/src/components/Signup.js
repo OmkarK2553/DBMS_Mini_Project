@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
     const navigate = useNavigate()
-    const [idValue, setIdValue] = React.useState(1001)
+    const [idValue, setIdValue] = React.useState(1005)
 
     const [userData, setUserData] = React.useState({
         id: idValue,
@@ -27,8 +27,8 @@ const Signup = () => {
         console.log(userData);
     }
 
-    const register = () => {
-        axios.post("http://localhost:5000/register", {
+    const register = async () => {
+        await axios.post("http://localhost:5000/register", {
             id: userData.id,
             name: userData.name,
             email: userData.email,
@@ -42,9 +42,7 @@ const Signup = () => {
             window.alert("User Registered Successfully!")
             console.log(res, "res");
             console.log("posted axios");
-            let temp = idValue
-            temp += 1;
-            setIdValue(temp);
+            setIdValue(idValue + 1);
             console.log(idValue);
             navigate("/")
         })
@@ -52,7 +50,7 @@ const Signup = () => {
 
     useEffect(() => {
 
-    }, [idValue])
+    }, [])
     return (
         <>
             <section className="container signupCont justify-content-center text-center">

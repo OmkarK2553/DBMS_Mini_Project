@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import "../css/dashboard.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Single from "./Single";
 
 
 const Dashboard = () => {
@@ -22,30 +21,38 @@ const Dashboard = () => {
         navigate("/plans", { state: { loggedInId: loggedInId } })
     }
 
-    const [displayData, setDisplayData] = React.useState([]);
-    let display = [];
+    const deleteIns = (id) => {
+        if (window.confirm("Are you sure you want to delete the insurance?")) {
+            axios.delete("http://localhost:5000/dashboard", {
+                id: id
+            }).then((res) => {
+                window.alert("Successfully deleted the insurance!")
+            })
+            setTimeout(() => getData(), 100)
+        }
+    }
 
-    axios.get("http://localhost:5000/dashboard", {
-    }).then((res) => {
-        console.log(res.data);
-        // setDisplayData(res.data);
-        display = res.data;
-        // res.data.map((val) => {
-        //     display.push(val);
-        // })
-        // setDisplayData(res.data);
-        // console.log(displayData);
-        // setDisplayData(display)
-        // console.log(displayData);
-        console.log(display);
-        // console.log(display[0]);
-        // console.log(display[1]);
-        // countRef.current++;
-        console.log("get");
-    });
+    const [displayData, setDisplayData] = React.useState();
+    const [toDisplay, setToDisplay] = React.useState(false);
+
+    const getData = async () => {
+        try {
+
+            await axios.get("http://localhost:5000/dashboard").then((res) => {
+                console.log(res.data);
+                setDisplayData(res.data);
+                console.log(displayData);
+                setToDisplay(true);
+                console.log(toDisplay);
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     useEffect(() => {
-        console.log("effect");
+        getData();
     }, [])
     return (
         <>
@@ -109,16 +116,6 @@ const Dashboard = () => {
                         </div>
                         <h5 className="text-center">Active Insurances</h5>
                         <hr />
-                        {/* <h6>{display[0].u_id}</h6> */}
-                        {/* {display.map((val) => {
-                            return (
-                                <div>
-                                    <p>{val.u_id}</p>
-                                    <p>{val.ins_id}</p>
-                                </div>
-                            );
-                        })} */}
-                        {/* {console.log(display)} */}
 
                         <table className="table">
                             <thead>
@@ -130,46 +127,22 @@ const Dashboard = () => {
                                     <th scope="col">Duration</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {display.map((val) => {
-                                    // console.log(val.u_id);
-                                    return (
+                            {toDisplay ? displayData.map((val) => {
+                                return (
+                                    <tbody>
                                         <tr>
                                             <td>{val.u_id}</td>
                                             <td>{val.ins_id}</td>
                                             <td>{val.b_date}</td>
                                             <td>{val.amount}</td>
                                             <td>{val.duration}</td>
-                                            <td>hihi</td>
                                         </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                        {/* <table>
-                            <tr className="thead">
-                                <th >User ID</th>
-                                <th>Insurance ID</th>
-                                <th >Date of Buying</th>
-                                <th >Sum Insured</th>
-                                <th >Duration</th>
-                            </tr>
-                            <tr>
-                                {display.map((val, key) => {
-                                    return (
-                                        <div className="rowcontent">
-                                            <th>{val.u_id}</th>
-                                            <th>{val.ins_id}</th>
-                                            <th>{val.b_date}</th>
-                                            <th>{val.amount}</th>
-                                            <th>{val.duration}</th>
-                                        </div>
-                                    );
-                                })}
-                            </tr>
-                        </table> */}
-                    </div>
+                                    </tbody>
 
+                                );
+                            }) : <h6>No active plans!</h6>}
+                        </table>
+                    </div>
                 </div>
             </section>
         </>
