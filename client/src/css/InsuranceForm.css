@@ -154,7 +154,7 @@ form .categoryy label .dot {
 }
 
 form input[type="radio"] {
-    display: none;
+    /* display: none; */
 }
 
 form .button {

@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
 const PORT = 5000;
 
 const db = require("./routes/db-config");
-const cookie = require("cookie-parser");
 
 app.use("/js", express.static(__dirname + "./public/js"));
 app.use("/css", express.static(__dirname + "./public/css"));
@@ -13,11 +14,12 @@ app.use("/css", express.static(__dirname + "./public/css"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-app.use(cookie());
 app.use(express.json());
 app.use(cors());
 
-app.post("/register", (req, res) => {
+const SECRET_KEY = "INSURANCEPORTAL"
+
+app.post("/register", async (req, res) => {
 
     const id = req.body.id;
     const name = req.body.name;
@@ -28,49 +30,118 @@ app.post("/register", (req, res) => {
     const password = req.body.password;
     const cpassword = req.body.cpassword;
 
-    db.query(
-        "INSERT INTO User (u_id,name,email,phone_n,gender,b_date,pass,cpass) VALUES (?,?,?,?,?,?,?,?)",
-        [id, name, email, phone, gender, bdate, password, cpassword],
-        (err, result) => {
-            if (err) {
-                console.log(err);
+    try{
+        db.query(
+            "SELECT * FROM User WHERE email=?",
+            [email],
+            (err, result) => {
+                if (err) {
+                    res.status(400).send({ message: err })
+                }
+                else {
+                    if (result.length > 0) {
+                        console.log(result, "User exists");
+                        res.status(500).send({ message: "User already exists!" })
+                    }
+                    else {
+                        console.log(password);
+                        const hashedPassword = bcrypt.hash(password,10);
+                        console.log(hashedPassword);
+                        db.query(
+                            "INSERT INTO User (u_id,name,email,phone_n,gender,b_date,pass,cpass) VALUES (?,?,?,?,?,?,?,?)",
+                            [id, name, email, phone, gender, bdate, hashedPassword, hashedPassword],
+                            (err, result) => {
+                                if (err) {
+                                    console.log(err);
+                                    res.status(500).send({message:"Error while registering!"})
+                                }
+                                else{
+                                    const token = jwt.sign({email:email,id:id},SECRET_KEY);
+                                    console.log("posted post");
+                                    res.status(201).send({message:"User Registered Successfully"})
+
+                                }
+                            }
+                        )
+                    }
+                }
             }
-            // if (result.length > 0) {
-            //     res.send(result);
-            // }
-        }
-    )
-    console.log("posted post");
-    res.send({ message: "User Registered Successfully!" })
+        )
+    }
+    catch(e){
+        console.log(e);
+        res.status(400).json({message:"Error"})
+    }
+
+    
+    // res.send({ message: "User Registered Successfully!" })
 
 })
 
 let user;
 
 app.post("/login", (req, res) => {
+    // const email = req.body.email;
+    // const password = req.body.password;
+    // user = email;
+    // console.log(user, "userrr");
+    // db.query(
+    //     "SELECT * FROM User WHERE email=? AND pass=?",
+    //     [email, password],
+    //     (err, result) => {
+    //         if (err) {
+    //             res.send({ err: err })
+    //         }
+    //         else {
+    //             if (result.length > 0) {
+
+    //                 console.log(result, "loginresult");
+    //                 res.send(result);
+    //             }
+    //             else {
+    //                 res.send({ status: 500, message: "Invalid Credentials!" })
+    //             }
+    //         }
+    //     }
+    // )
+
+
+
     const email = req.body.email;
     const password = req.body.password;
-    user = email;
-    console.log(user, "userrr");
-    db.query(
-        "SELECT * FROM User WHERE email=? AND pass=?",
-        [email, password],
-        (err, result) => {
-            if (err) {
-                res.send({ err: err })
-            }
-            else {
-                if (result.length > 0) {
 
-                    console.log(result, "loginresult");
-                    res.send(result);
+    try {
+        db.query(
+            "SELECT * FROM User WHERE email=?",
+            [email],
+            (err, result) => {
+                if (err) {
+                    res.status(400).send({ message: err })
                 }
                 else {
-                    res.send({ status: 500, message: "Invalid Credentials!" })
+                    if (result.length <= 0) {
+                        console.log(result, "User doesn't exists");
+                        res.status(500).send({ message: "User doesn't exist!" })
+                    }
+                    else {
+                        console.log(result);
+                        const matchPassword = bcrypt.compare(password,result.password); 
+                        if(!matchPassword){
+                            res.status(400).send({message:"Invalid Credentials!"})
+                        }
+
+                        const token = jwt.sign({email:result.email,id:result.id},SECRET_KEY);
+                        res.status(201).send({message:"Logged In Successfully!"})
+                    }
                 }
             }
-        }
-    )
+        )
+    } catch (error) {
+        console.log(e);
+        res.status(400).json({message:"Error"})
+    }
+    user = email;
+    console.log(user, "userrr");
 })
 
 app.post("/adminlogin", (req, res) => {

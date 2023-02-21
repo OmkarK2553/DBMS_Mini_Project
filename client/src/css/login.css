@@ -25,11 +25,11 @@ h2 {
 }
 
 #uid {
-    width: 75%;
+    width: 100%;
 }
 
 #pwd {
-    width: 75%;
+    width: 100%;
 }
 
 #loginBtn {
@@ -57,3 +57,4 @@ h2 {
     background-color: #4867AA;
     color: white;
 }
+

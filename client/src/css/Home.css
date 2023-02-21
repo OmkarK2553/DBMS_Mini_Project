@@ -1,3 +1,8 @@
+/* body{
+    font-family: 'Mukta',
+    sans-serif;
+} */
+
 .main-title {
     background-color: #0062E6;
 }
@@ -6,6 +11,7 @@
     margin-top: auto;
     margin-bottom: auto;
     padding: 7.5vh;
+    color: whitesmoke;
 }
 
 .single-title {
@@ -42,4 +48,5 @@ img {
 .text {
     /* border: 1px black solid; */
     padding: 12.5vh;
+    font-size: larger;
 }

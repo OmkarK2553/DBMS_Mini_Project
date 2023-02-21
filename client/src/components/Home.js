@@ -5,8 +5,10 @@ import familypng from "../img/familypng.png"
 import dr from "../img/dr.png"
 import familypng2 from "../img/familypng2.png"
 import house from "../img/house.png"
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <>
       <section className='main-title justify-center align-middle'>
@@ -41,6 +43,8 @@ const Home = () => {
         <div className='text md-9'>
           A good health insurance policy would usually cover expenses made towards doctor consultation fees, costs towards medical tests, ambulance charges, hospitalization costs and even post-hospitalization recovery costs to a certain extent.
           <h6 style={{ margin: "5vh 0vh 5vh 0vh" }}>To buy an Insurance, Please Register and Login!</h6>
+          <button onClick={()=> navigate("/register")} className="btn btn-primary">Register</button>
+
         </div>
       </section>
 

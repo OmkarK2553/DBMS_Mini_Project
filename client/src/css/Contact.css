@@ -1,5 +1,11 @@
+.title-div{
+    background-color: #0062E6;
+    padding: 5vh;
+}
+
 .contact-title {
-    margin: 5vh;
+    /* margin: 5vh; */
+    color: whitesmoke;
     /* border-bottom: 2px black solid; */
 }
 
@@ -9,6 +15,7 @@
     flex-wrap: wrap;
     margin: 2.5vh;
     margin-top: 7vh;
+    
 }
 
 .single-contact {

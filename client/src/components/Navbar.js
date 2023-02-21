@@ -19,9 +19,6 @@ const Navbar = () => {
                             <a className="nav-link" href="/contact">Contact Us</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/adminlogin">Admin Login</a>
-                        </li>
-                        <li className="nav-item">
                             <a className="nav-link" href="/register">Signup</a>
                         </li>
                         <li className="nav-item">

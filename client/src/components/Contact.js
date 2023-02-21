@@ -5,9 +5,8 @@ const Contact = () => {
     return (
         <>
             <section>
-                <div>
+                <div className='title-div'>
                     <h1 className='text-center contact-title'>Contact Us</h1>
-                    <hr />
                 </div>
                 <div className='contact d-flex text-center'>
                     <div className="single-contact">

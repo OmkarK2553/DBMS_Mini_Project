@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
     const navigate = useNavigate()
-    const [idValue, setIdValue] = React.useState(1005)
+    const [idValue, setIdValue] = React.useState(1007)
 
     const [userData, setUserData] = React.useState({
         id: idValue,
@@ -53,43 +53,46 @@ const Signup = () => {
     }, [])
     return (
         <>
+        <div className="outsideCont">
             <section className="container signupCont justify-content-center text-center">
                 <h2>Register Here</h2>
-                <div className="inputFields">
-                    <input type="text" name="name" id="name" placeholder="Full Name" required onChange={(e) => handleChange(e)} />
-                </div>
+                <form className='form-group'>
+                    <div className="inputFields">
+                        <input className='form-control' type="text" name="name" id="name" placeholder="Full Name" required onChange={(e) => handleChange(e)} />
+                    </div>
 
-                <div className="contFields">
-                    <div className="inputFields">
-                        <input type="email" name="email" id="email" placeholder="Email" required onChange={(e) => handleChange(e)} />
+                    <div className="contFields">
+                        <div className="inputFields">
+                            <input className='form-control' type="email" name="email" id="email" placeholder="Email" required onChange={(e) => handleChange(e)} />
+                        </div>
+                        <div className="inputFields">
+                            <input className='form-control' type="text" name="phone" id="phone" placeholder="Phone Number" required onChange={(e) => handleChange(e)} />
+                        </div>
+                    </div>
+                    <div className="inputFields d-flex text-center justify-content-center">
+                        <div className='radioBtn form-check'>
+                            <input className="form-check-input" type="radio" value="male" name="gender" id="flexRadioDefault1" onChange={(e) => handleChange(e)} style={{ "marginRight": "5px" }} /><label for="gender" className='form-check-label'>Male</label>
+                        </div>
+                        <div className='radioBtn form-check'>
+                            <input className="form-check-input" type="radio" value="female" name="gender" id="flexRadioDefault1" onChange={(e) => handleChange(e)} style={{ "marginRight": "5px" }} /><label for="gender" className='form-check-label'>Female</label>
+                        </div>
                     </div>
                     <div className="inputFields">
-                        <input type="text" name="phone" id="phone" placeholder="Phone Number" required onChange={(e) => handleChange(e)} />
+                        <label htmlFor="bdate">BirthDate</label>
+                        <input className='form-control' type="date" name="bdate" id="bdate" placeholder="Birthdate" required onChange={(e) => handleChange(e)} />
                     </div>
-                </div>
-                <div className="inputFields d-flex text-center justify-content-center">
-                    <div className='radioBtn'>
-                        <input className="form-check-input" type="radio" value="male" name="gender" id="flexRadioDefault1" onChange={(e) => handleChange(e)} style={{ "marginRight": "5px" }} /><label>Male</label>
+                    <div className="inputFields">
+                        <input className='form-control' type="password" name="password" id="epwd" placeholder="Enter Password" required onChange={(e) => handleChange(e)} />
                     </div>
-                    <div className='radioBtn'>
-                        <input className="form-check-input" type="radio" value="female" name="gender" id="flexRadioDefault1" onChange={(e) => handleChange(e)} style={{ "marginRight": "5px" }} /><label>Female</label>
+                    <div className="inputFields">
+                        <input className='form-control' type="password" name="cpassword" id="cpwd" placeholder="Confirm Password" required onChange={(e) => handleChange(e)} />
                     </div>
-                </div>
-                <div className="inputFields">
-                    <label htmlFor="bdate">BirthDate</label>
-                    <br />
-                    <input type="date" name="bdate" id="bdate" placeholder="" required onChange={(e) => handleChange(e)} />
-                </div>
-                <div className="inputFields">
-                    <input type="password" name="password" id="epwd" placeholder="Enter Password" required onChange={(e) => handleChange(e)} />
-                </div>
-                <div className="inputFields">
-                    <input type="password" name="cpassword" id="cpwd" placeholder="Confirm Password" required onChange={(e) => handleChange(e)} />
-                </div>
-                <div id="loginBtn">
-                    <button type="submit" onClick={register} className="btn btn-success">Register</button>
-                </div>
+                    <div id="loginBtn">
+                        <button type="submit" onClick={register} className="btn btn-success">Register</button>
+                    </div>
+                </form>
             </section>
+        </div>
         </>
     )
 }
